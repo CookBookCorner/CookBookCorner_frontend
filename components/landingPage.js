@@ -1,9 +1,12 @@
-import { ImageBackground, StyleSheet, Text, ScrollView, View, TextInput, Pressable} from 'react-native';
+import { ImageBackground, StyleSheet, Text, ScrollView, View, TextInput, Pressable, Dimensions} from 'react-native';
 import { useState } from 'react';
 import { SearchBar, Card } from '@rneui/themed';
 // import { validateEmail } from '../utils';
 
 const LandingPage = ({ navigation }) => {
+
+    const backgroundImage = require('../assets/signinsignupbackground1.png')
+
     const [search, setSearch] = useState("");
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
@@ -30,8 +33,8 @@ const LandingPage = ({ navigation }) => {
     }
 
     return (
-        <ScrollView style={landingPageStyling.container}>
-            <ImageBackground source={{ uri: '' }} style={landingPageStyling.topBackground}> 
+        <ScrollView contentContainerStyle={landingPageStyling.scrollView}>
+            {/* <ImageBackground source={backgroundImage} style={landingPageStyling.backgroundImage}>  */}
                 <Text style={ landingPageStyling.title}>
                     Welcome to CookBook Corner
                 </Text>
@@ -71,7 +74,8 @@ const LandingPage = ({ navigation }) => {
                              {/*make it navigate the signed in home page when successfully created account using onPress={() => navigation.navigate('home')} */}
                            <Text style={landingPageStyling.button}>Create Account</Text>
                         {/* </Pressable> */}
-                        <Text style={[landingPageStyling.guest]} onPress={toggleSignUp} // have it navigate to the guest home screen when that gets set up
+                        <Text style={[landingPageStyling.others]} onPress={toggleSignIn}>Already have an account? Sign In</Text>
+                        <Text style={[landingPageStyling.others]} onPress={toggleSignUp} // have it navigate to the guest home screen when that gets set up
                         > Join as Guest</Text>
                     </View>
                 )}
@@ -97,7 +101,8 @@ const LandingPage = ({ navigation }) => {
                              {/*make it navigate the signed in home page using onPress={() => navigation.navigate('home')} */}
                            <Text style={landingPageStyling.button}>Sign In</Text>
                         {/* </Pressable> */}
-                        <Text style={[landingPageStyling.guest]} onPress={toggleSignUp} // have it navigate to the guest home screen when that gets set up
+                        <Text style={[landingPageStyling.others]} onPress={toggleSignIn}>Want to create an account? Sign Up</Text>
+                        <Text style={[landingPageStyling.others]} onPress={toggleSignUp} // have it navigate to the guest home screen when that gets set up
                         > Join as Guest</Text>
                     </View>
                 )}
@@ -139,7 +144,7 @@ const LandingPage = ({ navigation }) => {
                         <Card.Title>Trending 4</Card.Title>
                     </Card>
             </View>
-            </ImageBackground>
+            {/* </ImageBackground> */}
         </ScrollView>
     )
 }
@@ -147,8 +152,14 @@ const LandingPage = ({ navigation }) => {
 export default LandingPage
 
 const landingPageStyling = StyleSheet.create({
-    topBackground:{
+    scrollView: {
+        flexGrow: 1,
+    },
+    backgroundImage: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
         resizeMode: 'cover',
+        justifyContent: 'center',
     },
     title:{
         fontSize: 45,
@@ -201,8 +212,9 @@ const landingPageStyling = StyleSheet.create({
         padding: 8,
         overflow: 'hidden', //makes the background color not overflow out the border
     },
-    guest:{
-        textAlign: 'center'
+    others:{
+        textAlign: 'center',
+        padding: 2.5,
     },
     searchContainer:{
         marginTop: 10,
@@ -223,10 +235,10 @@ const landingPageStyling = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        height: 140,
+        height: 150,
     },
     cardImage:{
-        height: 70,
+        height: 80,
         width: 100
     },
 })
